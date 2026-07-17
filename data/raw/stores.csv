@@ -1,0 +1,31 @@
+Store_ID,Store_Name,City,State,Region,Store_Type,Store_Size,Opening_Year
+S001,FreshMart Hyderabad,Hyderabad,Telangana,South,Hypermarket,Large,2016
+S002,FreshMart Vijayawada,Vijayawada,Andhra Pradesh,South,Supermarket,Medium,2017
+S003,FreshMart Visakhapatnam,Visakhapatnam,Andhra Pradesh,South,Express,Small,2018
+S004,FreshMart Bengaluru,Bengaluru,Karnataka,South,Hypermarket,Large,2019
+S005,FreshMart Chennai,Chennai,Tamil Nadu,South,Supermarket,Medium,2020
+S006,FreshMart Mumbai,Mumbai,Maharashtra,West,Express,Small,2021
+S007,FreshMart Pune,Pune,Maharashtra,West,Hypermarket,Large,2015
+S008,FreshMart Delhi,Delhi,Delhi,North,Supermarket,Medium,2016
+S009,FreshMart Kolkata,Kolkata,West Bengal,East,Express,Small,2017
+S010,FreshMart Ahmedabad,Ahmedabad,Gujarat,West,Hypermarket,Large,2018
+S011,FreshMart Jaipur,Jaipur,Rajasthan,North,Supermarket,Medium,2019
+S012,FreshMart Lucknow,Lucknow,Uttar Pradesh,North,Express,Small,2020
+S013,FreshMart Bhopal,Bhopal,Madhya Pradesh,Central,Hypermarket,Large,2021
+S014,FreshMart Indore,Indore,Madhya Pradesh,Central,Supermarket,Medium,2015
+S015,FreshMart Kochi,Kochi,Kerala,South,Express,Small,2016
+S016,FreshMart Thiruvananthapuram,Thiruvananthapuram,Kerala,South,Hypermarket,Large,2017
+S017,FreshMart Coimbatore,Coimbatore,Tamil Nadu,South,Supermarket,Medium,2018
+S018,FreshMart Mysuru,Mysuru,Karnataka,South,Express,Small,2019
+S019,FreshMart Nagpur,Nagpur,Maharashtra,West,Hypermarket,Large,2020
+S020,FreshMart Surat,Surat,Gujarat,West,Supermarket,Medium,2021
+S021,FreshMart Patna,Patna,Bihar,East,Express,Small,2015
+S022,FreshMart Bhubaneswar,Bhubaneswar,Odisha,East,Hypermarket,Large,2016
+S023,FreshMart Ranchi,Ranchi,Jharkhand,East,Supermarket,Medium,2017
+S024,FreshMart Chandigarh,Chandigarh,Chandigarh,North,Express,Small,2018
+S025,FreshMart Guwahati,Guwahati,Assam,North-East,Hypermarket,Large,2019
+S026,FreshMart Noida,Noida,Uttar Pradesh,North,Supermarket,Medium,2020
+S027,FreshMart Gurugram,Gurugram,Haryana,North,Express,Small,2021
+S028,FreshMart Warangal,Warangal,Telangana,South,Hypermarket,Large,2015
+S029,FreshMart Tirupati,Tirupati,Andhra Pradesh,South,Supermarket,Medium,2016
+S030,FreshMart Nashik,Nashik,Maharashtra,West,Express,Small,2017

@@ -1,0 +1,101 @@
+Product_ID,Product_Name,Category,Brand,Shelf_Life_Days,Unit_Price,Unit,Storage_Type
+P001,Milk 500ml,Dairy,Amul,5,32,500 ml,Refrigerated
+P002,Curd 400g,Dairy,Amul,10,45,400 g,Refrigerated
+P003,Butter 200g,Dairy,Amul,90,65,200 g,Refrigerated
+P004,Paneer 200g,Dairy,Amul,7,90,200 g,Refrigerated
+P005,Cheese Slices,Dairy,Amul,120,140,200 g,Refrigerated
+P006,Apple,Fruits,Fresh Farm,15,180,1 kg,Room Temperature
+P007,Banana,Fruits,Fresh Farm,7,60,1 dozen,Room Temperature
+P008,Orange,Fruits,Fresh Farm,12,120,1 kg,Room Temperature
+P009,Mango,Fruits,Fresh Farm,6,150,1 kg,Room Temperature
+P010,Grapes,Fruits,Fresh Farm,5,90,500 g,Refrigerated
+P011,Tomato,Vegetables,Fresh Farm,7,40,1 kg,Room Temperature
+P012,Potato,Vegetables,Fresh Farm,30,35,1 kg,Room Temperature
+P013,Onion,Vegetables,Fresh Farm,30,45,1 kg,Room Temperature
+P014,Carrot,Vegetables,Fresh Farm,14,60,1 kg,Refrigerated
+P015,Spinach,Vegetables,Fresh Farm,3,25,250 g,Refrigerated
+P016,Bread,Bakery,Britannia,3,40,400 g,Room Temperature
+P017,Brown Bread,Bakery,Britannia,4,50,400 g,Room Temperature
+P018,Burger Buns,Bakery,Harvest,4,45,4 pcs,Room Temperature
+P019,Croissant,Bakery,Harvest,2,35,1 pc,Room Temperature
+P020,Cake,Bakery,Monginis,5,300,500 g,Refrigerated
+P021,Rice,Grains,India Gate,365,70,1 kg,Room Temperature
+P022,Wheat Flour,Grains,Aashirvaad,180,55,1 kg,Room Temperature
+P023,Sugar,Grains,Madhur,365,45,1 kg,Room Temperature
+P024,Salt,Grains,Tata,730,25,1 kg,Room Temperature
+P025,Toor Dal,Grains,Fortune,365,140,1 kg,Room Temperature
+P026,Beverage Item 026,Beverages,Real,180,108,1 L,Room Temperature
+P027,Snack Item 027,Snacks,Lays,180,51,100 g,Room Temperature
+P028,Frozen Food Item 028,Frozen Foods,Safal,180,154,500 g,Frozen
+P029,Ready-to-Eat Item 029,Ready-to-Eat,MTR,180,127,300 g,Room Temperature
+P030,Meat Item 030,Meat,Fresh,5,260,500 g,Refrigerated
+P031,Seafood Item 031,Seafood,Fresh,30,343,500 g,Frozen
+P032,Beverage Item 032,Beverages,Real,180,126,1 L,Room Temperature
+P033,Snack Item 033,Snacks,Lays,180,69,100 g,Room Temperature
+P034,Frozen Food Item 034,Frozen Foods,Safal,180,122,500 g,Frozen
+P035,Ready-to-Eat Item 035,Ready-to-Eat,MTR,180,95,300 g,Room Temperature
+P036,Meat Item 036,Meat,Fresh,5,228,500 g,Refrigerated
+P037,Seafood Item 037,Seafood,Fresh,30,311,500 g,Frozen
+P038,Beverage Item 038,Beverages,Real,180,94,1 L,Room Temperature
+P039,Snack Item 039,Snacks,Lays,180,37,100 g,Room Temperature
+P040,Frozen Food Item 040,Frozen Foods,Safal,180,140,500 g,Frozen
+P041,Ready-to-Eat Item 041,Ready-to-Eat,MTR,180,113,300 g,Room Temperature
+P042,Meat Item 042,Meat,Fresh,5,246,500 g,Refrigerated
+P043,Seafood Item 043,Seafood,Fresh,30,329,500 g,Frozen
+P044,Beverage Item 044,Beverages,Real,180,112,1 L,Room Temperature
+P045,Snack Item 045,Snacks,Lays,180,55,100 g,Room Temperature
+P046,Frozen Food Item 046,Frozen Foods,Safal,180,158,500 g,Frozen
+P047,Ready-to-Eat Item 047,Ready-to-Eat,MTR,180,131,300 g,Room Temperature
+P048,Meat Item 048,Meat,Fresh,5,264,500 g,Refrigerated
+P049,Seafood Item 049,Seafood,Fresh,30,347,500 g,Frozen
+P050,Beverage Item 050,Beverages,Real,180,80,1 L,Room Temperature
+P051,Snack Item 051,Snacks,Lays,180,23,100 g,Room Temperature
+P052,Frozen Food Item 052,Frozen Foods,Safal,180,126,500 g,Frozen
+P053,Ready-to-Eat Item 053,Ready-to-Eat,MTR,180,99,300 g,Room Temperature
+P054,Meat Item 054,Meat,Fresh,5,232,500 g,Refrigerated
+P055,Seafood Item 055,Seafood,Fresh,30,315,500 g,Frozen
+P056,Beverage Item 056,Beverages,Real,180,98,1 L,Room Temperature
+P057,Snack Item 057,Snacks,Lays,180,41,100 g,Room Temperature
+P058,Frozen Food Item 058,Frozen Foods,Safal,180,144,500 g,Frozen
+P059,Ready-to-Eat Item 059,Ready-to-Eat,MTR,180,117,300 g,Room Temperature
+P060,Meat Item 060,Meat,Fresh,5,250,500 g,Refrigerated
+P061,Seafood Item 061,Seafood,Fresh,30,333,500 g,Frozen
+P062,Beverage Item 062,Beverages,Real,180,116,1 L,Room Temperature
+P063,Snack Item 063,Snacks,Lays,180,59,100 g,Room Temperature
+P064,Frozen Food Item 064,Frozen Foods,Safal,180,162,500 g,Frozen
+P065,Ready-to-Eat Item 065,Ready-to-Eat,MTR,180,135,300 g,Room Temperature
+P066,Meat Item 066,Meat,Fresh,5,268,500 g,Refrigerated
+P067,Seafood Item 067,Seafood,Fresh,30,301,500 g,Frozen
+P068,Beverage Item 068,Beverages,Real,180,84,1 L,Room Temperature
+P069,Snack Item 069,Snacks,Lays,180,27,100 g,Room Temperature
+P070,Frozen Food Item 070,Frozen Foods,Safal,180,130,500 g,Frozen
+P071,Ready-to-Eat Item 071,Ready-to-Eat,MTR,180,103,300 g,Room Temperature
+P072,Meat Item 072,Meat,Fresh,5,236,500 g,Refrigerated
+P073,Seafood Item 073,Seafood,Fresh,30,319,500 g,Frozen
+P074,Beverage Item 074,Beverages,Real,180,102,1 L,Room Temperature
+P075,Snack Item 075,Snacks,Lays,180,45,100 g,Room Temperature
+P076,Frozen Food Item 076,Frozen Foods,Safal,180,148,500 g,Frozen
+P077,Ready-to-Eat Item 077,Ready-to-Eat,MTR,180,121,300 g,Room Temperature
+P078,Meat Item 078,Meat,Fresh,5,254,500 g,Refrigerated
+P079,Seafood Item 079,Seafood,Fresh,30,337,500 g,Frozen
+P080,Beverage Item 080,Beverages,Real,180,120,1 L,Room Temperature
+P081,Snack Item 081,Snacks,Lays,180,63,100 g,Room Temperature
+P082,Frozen Food Item 082,Frozen Foods,Safal,180,166,500 g,Frozen
+P083,Ready-to-Eat Item 083,Ready-to-Eat,MTR,180,139,300 g,Room Temperature
+P084,Meat Item 084,Meat,Fresh,5,222,500 g,Refrigerated
+P085,Seafood Item 085,Seafood,Fresh,30,305,500 g,Frozen
+P086,Beverage Item 086,Beverages,Real,180,88,1 L,Room Temperature
+P087,Snack Item 087,Snacks,Lays,180,31,100 g,Room Temperature
+P088,Frozen Food Item 088,Frozen Foods,Safal,180,134,500 g,Frozen
+P089,Ready-to-Eat Item 089,Ready-to-Eat,MTR,180,107,300 g,Room Temperature
+P090,Meat Item 090,Meat,Fresh,5,240,500 g,Refrigerated
+P091,Seafood Item 091,Seafood,Fresh,30,323,500 g,Frozen
+P092,Beverage Item 092,Beverages,Real,180,106,1 L,Room Temperature
+P093,Snack Item 093,Snacks,Lays,180,49,100 g,Room Temperature
+P094,Frozen Food Item 094,Frozen Foods,Safal,180,152,500 g,Frozen
+P095,Ready-to-Eat Item 095,Ready-to-Eat,MTR,180,125,300 g,Room Temperature
+P096,Meat Item 096,Meat,Fresh,5,258,500 g,Refrigerated
+P097,Seafood Item 097,Seafood,Fresh,30,341,500 g,Frozen
+P098,Beverage Item 098,Beverages,Real,180,124,1 L,Room Temperature
+P099,Snack Item 099,Snacks,Lays,180,67,100 g,Room Temperature
+P100,Frozen Food Item 100,Frozen Foods,Safal,180,120,500 g,Frozen
