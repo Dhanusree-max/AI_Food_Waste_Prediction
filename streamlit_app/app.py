@@ -3,9 +3,10 @@ import pandas as pd
 import joblib
 import plotly.express as px
 from pathlib import Path
+import numpy as np
 
 # ============================================================
-# Page configuration and professional theme
+# PAGE CONFIGURATION
 # ============================================================
 st.set_page_config(
     page_title="Food Waste Intelligence",
@@ -14,6 +15,9 @@ st.set_page_config(
     initial_sidebar_state="expanded",
 )
 
+# ============================================================
+# ENTERPRISE THEME — WHITE, NAVY, TEAL
+# ============================================================
 st.markdown(
     """
     <style>
@@ -23,130 +27,167 @@ st.markdown(
         font-family: 'Inter', sans-serif;
     }
     .stApp {
-        background: #F5F7FA;
+        background: #F4F7FB;
         color: #172B4D;
     }
     [data-testid="stHeader"] {
-        background: rgba(245,247,250,0.96);
+        background: rgba(244,247,251,0.96);
     }
     [data-testid="stSidebar"] {
         background: #FFFFFF;
-        border-right: 1px solid #E2E8F0;
+        border-right: 1px solid #DFE7F0;
     }
     [data-testid="stSidebar"] * {
-        color: #26364B;
+        color: #24364B;
+    }
+    .block-container {
+        max-width: 1500px;
+        padding-top: 1.7rem;
+        padding-bottom: 3rem;
     }
     .hero {
         background: #FFFFFF;
-        border: 1px solid #E2E8F0;
+        border: 1px solid #DFE7F0;
         border-top: 5px solid #0F766E;
-        padding: 28px 32px;
         border-radius: 16px;
+        padding: 28px 32px;
         margin-bottom: 24px;
-        box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04);
+        box-shadow: 0 5px 18px rgba(23,43,77,0.045);
+    }
+    .hero-kicker {
+        color: #0F766E !important;
+        font-size: 0.78rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        margin-bottom: 10px;
     }
     .hero h1 {
-        color: #172B4D;
-        font-size: 2rem;
+        color: #172B4D !important;
+        font-size: clamp(1.7rem, 3vw, 2.35rem);
+        line-height: 1.2;
         font-weight: 800;
-        margin: 0 0 10px 0;
-        line-height: 1.25;
+        margin: 0 0 12px 0;
     }
     .hero p {
-        color: #52647A;
+        color: #52647A !important;
         font-size: 1rem;
+        line-height: 1.75;
         margin: 0;
-        line-height: 1.7;
+        max-width: 950px;
     }
     .section-title {
-        color: #172B4D;
-        font-size: 1.35rem;
-        font-weight: 750;
-        margin: 20px 0 8px 0;
+        color: #172B4D !important;
+        font-size: 1.32rem;
+        font-weight: 800;
+        margin: 20px 0 7px 0;
     }
     .section-help {
-        color: #52647A;
-        font-size: 0.93rem;
-        margin-bottom: 14px;
-        line-height: 1.6;
+        color: #5B6B80 !important;
+        font-size: 0.91rem;
+        line-height: 1.65;
+        margin-bottom: 15px;
     }
-    .info-card {
+    .metric-card {
         background: #FFFFFF;
-        border: 1px solid #E2E8F0;
+        border: 1px solid #DFE7F0;
         border-radius: 14px;
-        padding: 18px 20px;
-        min-height: 112px;
-        box-shadow: 0 3px 12px rgba(15, 23, 42, 0.035);
+        padding: 19px 20px;
+        min-height: 132px;
+        box-shadow: 0 4px 14px rgba(23,43,77,0.035);
     }
-    .info-label {
-        color: #64748B;
-        font-size: 0.85rem;
-        font-weight: 600;
-        margin-bottom: 8px;
+    .metric-label {
+        color: #64748B !important;
+        font-size: 0.83rem;
+        font-weight: 650;
+        margin-bottom: 10px;
     }
-    .info-value {
-        color: #172B4D;
-        font-size: 1.7rem;
+    .metric-value {
+        color: #172B4D !important;
+        font-size: clamp(1.45rem, 2.2vw, 1.9rem);
         font-weight: 800;
         line-height: 1.2;
+        overflow-wrap: anywhere;
     }
-    .info-note {
-        color: #64748B;
-        font-size: 0.78rem;
-        margin-top: 7px;
+    .metric-note {
+        color: #64748B !important;
+        font-size: 0.77rem;
+        margin-top: 8px;
+        line-height: 1.5;
     }
     .recommendation {
         background: #FFFFFF;
-        border: 1px solid #DCE5EC;
+        border: 1px solid #DFE7F0;
         border-left: 5px solid #0F766E;
         border-radius: 12px;
-        padding: 16px 18px;
-        margin: 10px 0;
-        color: #334155;
-        line-height: 1.65;
+        padding: 16px 19px;
+        margin: 11px 0;
+        color: #334155 !important;
+        line-height: 1.7;
+    }
+    .recommendation * {
+        color: #334155 !important;
+    }
+    .recommendation h4 {
+        color: #172B4D !important;
+        font-size: 0.98rem;
+        font-weight: 750;
+        margin: 0 0 6px 0;
     }
     .recommendation.warning {
         border-left-color: #D97706;
+        background: #FFFCF5;
     }
-    .recommendation h4 {
-        color: #172B4D;
-        margin: 0 0 6px 0;
-        font-size: 1rem;
+    .recommendation.blue {
+        border-left-color: #2563EB;
     }
-    .small-muted {
-        color: #64748B;
+    .pill {
+        display: inline-block;
+        padding: 4px 9px;
+        border-radius: 20px;
+        background: #E6F5F2;
+        color: #0F766E !important;
+        font-size: 0.75rem;
+        font-weight: 750;
+        margin-bottom: 10px;
+    }
+    .muted {
+        color: #64748B !important;
         font-size: 0.83rem;
-        line-height: 1.55;
+        line-height: 1.65;
     }
     div.stButton > button, div.stDownloadButton > button {
         background: #0F766E;
-        color: white;
+        color: #FFFFFF;
         border: 1px solid #0F766E;
         border-radius: 9px;
-        font-weight: 650;
+        font-weight: 700;
         min-height: 42px;
     }
     div.stButton > button:hover, div.stDownloadButton > button:hover {
         background: #115E59;
-        color: white;
+        color: #FFFFFF;
         border-color: #115E59;
     }
     [data-testid="stFileUploader"] {
         background: #FFFFFF;
-        border: 1px dashed #94A3B8;
+        border: 1px dashed #9AAABD;
         border-radius: 12px;
         padding: 12px;
     }
     [data-testid="stDataFrame"] {
-        border: 1px solid #E2E8F0;
+        border: 1px solid #DFE7F0;
         border-radius: 10px;
         overflow: hidden;
+    }
+    div[data-testid="stAlert"] {
+        border-radius: 10px;
     }
     h1, h2, h3, h4, p, label {
         color: #172B4D;
     }
     hr {
-        border-color: #E2E8F0;
+        border-color: #DFE7F0;
     }
     </style>
     """,
@@ -154,8 +195,8 @@ st.markdown(
 )
 
 # ============================================================
-# Resolve model location
-# Expected repository structure:
+# PATHS AND MODEL
+# Expected repository:
 # AI_Food_Waste_Prediction/
 #   models/food_waste_model.pkl
 #   streamlit_app/app.py
@@ -170,45 +211,56 @@ def load_model(model_path: str):
 
 
 # ============================================================
-# Sidebar
+# SIDEBAR
 # ============================================================
 with st.sidebar:
     st.markdown("## 🍎 Food Waste AI")
-    st.caption("INVENTORY INTELLIGENCE")
+    st.markdown(
+        "<span style='color:#0F766E;font-weight:800;font-size:0.75rem;"
+        "letter-spacing:.1em;'>INVENTORY INTELLIGENCE</span>",
+        unsafe_allow_html=True,
+    )
     st.divider()
-
-    st.markdown("### How to use")
+    st.markdown("### Workflow")
     st.markdown(
         """
-        1. Upload the preprocessed feature CSV.
-        2. Check the input columns.
-        3. Generate predictions.
-        4. Review the metrics and charts.
-        5. Read the suggested next actions.
-        6. Download the prediction results.
+        **01** · Upload features  
+
+        **02** · Generate predictions  
+
+        **03** · Explore analytics  
+
+        **04** · Review records  
+
+        **05** · Export results
         """
     )
-
     st.divider()
-    st.markdown("### Built with")
+    st.markdown("### Technology")
     st.markdown(
-        "<p class='small-muted'>Python · Pandas · Scikit-learn · "
+        "<p class='muted'>Python · Pandas · Scikit-learn · "
         "Plotly · Streamlit</p>",
         unsafe_allow_html=True,
     )
-    st.caption("Predictions are estimates, not guarantees.")
+    st.divider()
+    st.markdown(
+        "<p class='muted'>Predictions are estimates. Validate results "
+        "against observed waste before operational decisions.</p>",
+        unsafe_allow_html=True,
+    )
 
 # ============================================================
-# Hero header
+# HERO
 # ============================================================
 st.markdown(
     """
     <div class="hero">
-        <h1>🍎 Food Waste Prediction &amp; Inventory Intelligence</h1>
+        <div class="hero-kicker">Inventory analytics platform</div>
+        <h1>🍎 Food Waste Prediction &amp; Intelligence</h1>
         <p>
-            Turn preprocessed inventory data into clear waste predictions.
-            Explore overall estimates, identify records that may need review,
-            and support better inventory decisions.
+            Understand predicted food waste with clear metrics, visual analytics,
+            and practical review suggestions. Upload your model-ready inventory
+            features to explore record-level estimates.
         </p>
     </div>
     """,
@@ -216,12 +268,12 @@ st.markdown(
 )
 
 # ============================================================
-# Load model with clear errors
+# LOAD MODEL
 # ============================================================
 if not MODEL_PATH.exists():
     st.error(
-        f"Model file not found at `{MODEL_PATH}`. "
-        "Check that `models/food_waste_model.pkl` is committed to GitHub."
+        "Model file not found. Expected `models/food_waste_model.pkl` "
+        "at the repository root. Confirm the file is committed to GitHub."
     )
     st.stop()
 
@@ -229,20 +281,23 @@ try:
     model = load_model(str(MODEL_PATH))
 except Exception as exc:
     st.error(
-        "The model could not be loaded. Check that the model file is valid "
-        "and that the required package versions are compatible."
+        "The trained model could not be loaded. Check that the model file "
+        "is valid and its required Python package versions are installed."
     )
     st.exception(exc)
     st.stop()
 
 # ============================================================
-# Upload input data
+# UPLOAD
 # ============================================================
-st.markdown("<div class='section-title'>1. Upload your dataset</div>", unsafe_allow_html=True)
 st.markdown(
-    "<div class='section-help'>Upload the same numeric, preprocessed feature "
-    "CSV used by the model during training. Do not upload a raw CSV unless "
-    "it has been processed into the exact training features.</div>",
+    "<div class='section-title'>01 &nbsp; Upload your dataset</div>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div class='section-help'>Upload the numeric, preprocessed feature CSV "
+    "that matches the model's training inputs. The application cannot "
+    "re-create training-time encoding or feature engineering from a raw file.</div>",
     unsafe_allow_html=True,
 )
 
@@ -253,138 +308,243 @@ uploaded_file = st.file_uploader(
 )
 
 if uploaded_file is None:
-    st.info(
-        "Upload your preprocessed CSV to begin. After prediction, this page "
-        "will show summary metrics, charts, records for review, recommendations, "
-        "and a downloadable results file."
+    st.markdown(
+        """
+        <div class="recommendation blue">
+            <h4>Ready when you are</h4>
+            Upload your preprocessed feature file to see the prediction summary,
+            charts, records to review, recommendations, and export options.
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
     st.stop()
 
 try:
     data = pd.read_csv(uploaded_file)
 except Exception as exc:
-    st.error(f"Could not read this CSV file: {exc}")
+    st.error(f"Unable to read the uploaded CSV: {exc}")
     st.stop()
 
 if data.empty:
-    st.warning("The uploaded CSV has no rows. Please upload a dataset containing records.")
+    st.error("The uploaded CSV has no rows. Please choose a dataset with records.")
     st.stop()
 
-if data.select_dtypes(include=["object", "category"]).shape[1] > 0:
-    st.warning(
-        "Some columns contain text values. The model may require numeric, "
-        "preprocessed features. Upload the encoded feature CSV used during training."
+if data.columns.duplicated().any():
+    st.error("The uploaded CSV contains duplicate column names. Please correct it and upload again.")
+    st.stop()
+
+# Model-ready input should be numeric and finite.
+non_numeric = [
+    col for col in data.columns
+    if not pd.api.types.is_numeric_dtype(data[col])
+]
+if non_numeric:
+    st.error(
+        "The uploaded CSV contains non-numeric columns: "
+        + ", ".join(map(str, non_numeric))
+        + ". Upload the numeric, preprocessed feature dataset used for training."
     )
+    st.stop()
 
-st.success(f"Dataset loaded: {len(data):,} rows and {len(data.columns):,} columns.")
-
-with st.expander("Preview uploaded data", expanded=False):
-    st.dataframe(data.head(10), use_container_width=True)
-    st.caption("Showing the first 10 rows only.")
-
-# ============================================================
-# Predict
-# ============================================================
-st.markdown("<div class='section-title'>2. Generate predictions</div>", unsafe_allow_html=True)
-st.markdown(
-    "<div class='section-help'>The model estimates waste quantity for each "
-    "uploaded record. Review the outputs before making inventory changes.</div>",
-    unsafe_allow_html=True,
-)
-
-if not st.button("Generate food waste predictions", type="primary", use_container_width=False):
+if data.isna().any().any():
+    st.error(
+        "The uploaded CSV contains missing values. Apply the same missing-value "
+        "preprocessing used during training before uploading."
+    )
     st.stop()
 
 try:
-    expected_features = getattr(model, "n_features_in_", None)
-    if expected_features is not None and len(data.columns) != expected_features:
-        st.error(
-            f"The uploaded data has {len(data.columns)} columns, but the model "
-            f"expects {expected_features}. Upload the exact preprocessed feature "
-            "set used during training."
-        )
-        st.stop()
+    numeric_values = data.to_numpy(dtype=float)
+except (TypeError, ValueError):
+    st.error("Some values cannot be converted to numeric values.")
+    st.stop()
 
-    predictions = model.predict(data)
-    result = data.copy()
-    result["Predicted_Waste_Quantity"] = predictions
-
-    waste_col = "Predicted_Waste_Quantity"
-    result[waste_col] = pd.to_numeric(result[waste_col], errors="coerce")
-    result = result.dropna(subset=[waste_col])
-
-    if result.empty:
-        st.error("The model did not return any valid predictions for these records.")
-        st.stop()
-
-except Exception as exc:
-    st.error(
-        "Prediction failed. Verify that the CSV has the exact features, "
-        "encoding, and column order expected by the trained model."
-    )
-    st.exception(exc)
+if not np.isfinite(numeric_values).all():
+    st.error("The uploaded CSV contains infinite or invalid numeric values.")
     st.stop()
 
 # ============================================================
-# Prediction summary cards
+# INPUT OVERVIEW
 # ============================================================
-pred = result[waste_col]
-total_waste = float(pred.sum())
-average_waste = float(pred.mean())
-max_waste = float(pred.max())
-records_count = len(result)
-high_threshold = float(pred.quantile(0.90))
-high_count = int((pred >= high_threshold).sum())
-
-st.markdown("<div class='section-title'>3. Prediction summary</div>", unsafe_allow_html=True)
 st.markdown(
-    "<div class='section-help'>These values summarize the model's estimates "
-    "for the uploaded records. They are predicted quantities, not confirmed "
-    "real-world waste.</div>",
+    "<div class='section-title'>Dataset overview</div>",
     unsafe_allow_html=True,
 )
-
-metric_cols = st.columns(4)
-metrics = [
-    ("Total predicted waste", f"{total_waste:,.2f}", "Sum across uploaded records"),
-    ("Average per record", f"{average_waste:,.2f}", "Mean predicted quantity"),
-    ("Highest prediction", f"{max_waste:,.2f}", "Largest record-level estimate"),
-    ("Records analysed", f"{records_count:,}", "Rows with valid predictions"),
+overview_cols = st.columns(3)
+overview = [
+    ("Input records", f"{len(data):,}", "Rows submitted for prediction"),
+    ("Input features", f"{data.shape[1]:,}", "Columns supplied to the model"),
+    ("Missing values", f"{int(data.isna().sum().sum()):,}", "Missing cells detected"),
 ]
-for col, (label, value, note) in zip(metric_cols, metrics):
+for col, (label, value, note) in zip(overview_cols, overview):
     with col:
         st.markdown(
             f"""
-            <div class="info-card">
-                <div class="info-label">{label}</div>
-                <div class="info-value">{value}</div>
-                <div class="info-note">{note}</div>
+            <div class="metric-card">
+                <div class="metric-label">{label}</div>
+                <div class="metric-value">{value}</div>
+                <div class="metric-note">{note}</div>
             </div>
             """,
             unsafe_allow_html=True,
         )
 
-st.markdown("---")
+with st.expander("Preview input features"):
+    st.dataframe(data.head(10), use_container_width=True, hide_index=True)
 
 # ============================================================
-# Charts
+# PREDICT — preserve working model.predict(data) workflow
 # ============================================================
-st.markdown("<div class='section-title'>4. Explore the predictions</div>", unsafe_allow_html=True)
 st.markdown(
-    "<div class='section-help'>Use these charts to understand how the predicted "
-    "values are distributed. The charts describe model output; they do not prove "
-    "why waste occurs.</div>",
+    "<div class='section-title'>02 &nbsp; Generate predictions</div>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div class='section-help'>Generate an estimate for every uploaded record. "
+    "The app checks feature count where the model exposes it, and reports "
+    "prediction errors clearly.</div>",
     unsafe_allow_html=True,
 )
 
-chart_col1, chart_col2 = st.columns(2)
+if not st.button("Generate food waste predictions", type="primary"):
+    st.stop()
 
-with chart_col1:
+try:
+    expected_count = getattr(model, "n_features_in_", None)
+    if expected_count is not None and len(data.columns) != int(expected_count):
+        st.error(
+            f"Feature-count mismatch: the uploaded file has {len(data.columns)} "
+            f"columns, but the model expects {expected_count}. Upload the exact "
+            "preprocessed feature set used during training."
+        )
+        st.stop()
+
+    expected_names = getattr(model, "feature_names_in_", None)
+    if expected_names is not None:
+        expected_names = list(expected_names)
+        missing_features = [name for name in expected_names if name not in data.columns]
+        unexpected_features = [name for name in data.columns if name not in expected_names]
+        if missing_features or unexpected_features:
+            if missing_features:
+                st.error("Missing model features: " + ", ".join(map(str, missing_features)))
+            if unexpected_features:
+                st.error("Unexpected input features: " + ", ".join(map(str, unexpected_features)))
+            st.stop()
+        prediction_input = data[expected_names]
+    else:
+        prediction_input = data
+
+    with st.spinner("Generating predictions..."):
+        predictions = model.predict(prediction_input)
+
+    predictions = np.asarray(predictions).reshape(-1)
+    if len(predictions) != len(data):
+        st.error("The number of predictions did not match the number of uploaded records.")
+        st.stop()
+    if not np.isfinite(predictions.astype(float)).all():
+        st.error("The model returned invalid prediction values.")
+        st.stop()
+
+    result = data.copy()
+    result["Predicted_Waste_Quantity"] = predictions
+    st.session_state["food_waste_result"] = result
+    st.success(f"Predictions generated for {len(result):,} records.")
+
+except Exception as exc:
+    st.error(
+        "Prediction failed. Confirm that the uploaded columns, feature order, "
+        "and preprocessing match the model's training data."
+    )
+    st.exception(exc)
+    st.stop()
+
+# ============================================================
+# RESULTS
+# ============================================================
+result = st.session_state.get("food_waste_result")
+if result is None or result.empty:
+    st.stop()
+
+waste_col = "Predicted_Waste_Quantity"
+pred = pd.to_numeric(result[waste_col], errors="coerce")
+valid_mask = pred.notna() & np.isfinite(pred)
+result = result.loc[valid_mask].copy()
+pred = pred.loc[valid_mask]
+
+if result.empty:
+    st.error("No valid predictions are available to display.")
+    st.stop()
+
+total_waste = float(pred.sum())
+average_waste = float(pred.mean())
+maximum_waste = float(pred.max())
+minimum_waste = float(pred.min())
+highest_index = pred.idxmax()
+high_threshold = float(pred.quantile(0.90))
+high_records = result.loc[pred >= high_threshold].sort_values(waste_col, ascending=False)
+high_count = len(high_records)
+
+st.divider()
+st.markdown(
+    "<div class='section-title'>03 &nbsp; Prediction overview</div>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div class='section-help'>A high-level summary of the model estimates "
+    "for this upload. Units are inherited from the target variable used "
+    "during model training.</div>",
+    unsafe_allow_html=True,
+)
+
+metric_cols = st.columns(4)
+metrics = [
+    ("Total predicted waste", f"{total_waste:,.2f}", "Sum of all estimates"),
+    ("Average per record", f"{average_waste:,.2f}", "Mean estimated quantity"),
+    ("Highest prediction", f"{maximum_waste:,.2f}", "Largest individual estimate"),
+    ("Records analysed", f"{len(result):,}", "Valid prediction rows"),
+]
+for col, (label, value, note) in zip(metric_cols, metrics):
+    with col:
+        st.markdown(
+            f"""
+            <div class="metric-card">
+                <div class="metric-label">{label}</div>
+                <div class="metric-value">{value}</div>
+                <div class="metric-note">{note}</div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+st.markdown(
+    "<p class='muted'>These figures are model estimates, not verified measurements "
+    "of actual food waste.</p>",
+    unsafe_allow_html=True,
+)
+
+# ============================================================
+# CHARTS
+# ============================================================
+st.markdown(
+    "<div class='section-title'>04 &nbsp; Explore the analytics</div>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div class='section-help'>Explore the range of predictions and compare "
+    "records. Charts describe the model output; they do not establish the "
+    "cause of waste.</div>",
+    unsafe_allow_html=True,
+)
+
+chart_left, chart_right = st.columns(2)
+
+with chart_left:
     hist = px.histogram(
         result,
         x=waste_col,
         nbins=25,
-        title="Distribution of predicted waste",
+        title="Predicted waste distribution",
         labels={waste_col: "Predicted waste quantity", "count": "Number of records"},
         color_discrete_sequence=["#0F766E"],
     )
@@ -392,140 +552,162 @@ with chart_col1:
         template="plotly_white",
         paper_bgcolor="#FFFFFF",
         plot_bgcolor="#FFFFFF",
-        font_color="#172B4D",
-        title_font_color="#172B4D",
+        font=dict(color="#172B4D", family="Inter"),
+        title_font=dict(color="#172B4D", size=17),
         margin=dict(l=20, r=20, t=60, b=20),
     )
+    hist.update_xaxes(gridcolor="#E8EEF4")
+    hist.update_yaxes(gridcolor="#E8EEF4")
     st.plotly_chart(hist, use_container_width=True)
 
-with chart_col2:
+with chart_right:
     bins = pd.cut(pred, bins=5, duplicates="drop")
     band_counts = bins.value_counts(sort=False).reset_index()
-    band_counts.columns = ["Prediction range", "Records"]
+    band_counts.columns = ["Prediction range", "Number of records"]
     band_counts["Prediction range"] = band_counts["Prediction range"].astype(str)
     band_chart = px.bar(
         band_counts,
         x="Prediction range",
-        y="Records",
+        y="Number of records",
         title="Records by prediction range",
-        labels={"Prediction range": "Predicted waste range", "Records": "Number of records"},
+        labels={"Prediction range": "Predicted waste range"},
         color_discrete_sequence=["#3B82A0"],
     )
     band_chart.update_layout(
         template="plotly_white",
         paper_bgcolor="#FFFFFF",
         plot_bgcolor="#FFFFFF",
-        font_color="#172B4D",
-        title_font_color="#172B4D",
+        font=dict(color="#172B4D", family="Inter"),
+        title_font=dict(color="#172B4D", size=17),
         margin=dict(l=20, r=20, t=60, b=20),
         xaxis_tickangle=-25,
     )
+    band_chart.update_xaxes(gridcolor="#E8EEF4")
+    band_chart.update_yaxes(gridcolor="#E8EEF4")
     st.plotly_chart(band_chart, use_container_width=True)
 
-# If there are useful categorical columns, show group-level estimates.
-categorical_candidates = [
+# Optional breakdown using columns that actually exist in the uploaded file.
+group_candidates = [
     col for col in ["City", "Category", "Store_Type", "Region", "Store_ID", "Store_Name"]
     if col in result.columns
 ]
-if categorical_candidates:
-    group_by = st.selectbox(
-        "Compare predicted waste by",
-        options=categorical_candidates,
-        help="Choose a column available in the uploaded dataset.",
+if group_candidates:
+    st.markdown("#### Compare predictions by group")
+    group_col = st.selectbox(
+        "Group records by",
+        group_candidates,
+        help="Only columns found in your uploaded CSV are available here.",
     )
     grouped = (
-        result.groupby(group_by, dropna=False)[waste_col]
-        .agg(["sum", "mean", "count"])
+        result.groupby(group_col, dropna=False)[waste_col]
+        .agg(Total="sum", Average="mean", Records="count")
         .reset_index()
-        .sort_values("sum", ascending=False)
+        .sort_values("Total", ascending=False)
         .head(15)
     )
-    grouped[group_by] = grouped[group_by].astype(str)
-    grouped_chart = px.bar(
+    grouped[group_col] = grouped[group_col].astype(str)
+    group_chart = px.bar(
         grouped,
-        x=group_by,
-        y="sum",
-        hover_data={"mean": ":.2f", "count": True, "sum": ":.2f"},
-        title=f"Highest total predicted waste by {group_by}",
-        labels={"sum": "Total predicted waste", group_by: group_by, "mean": "Average prediction", "count": "Records"},
+        x=group_col,
+        y="Total",
+        hover_data={"Average": ":.2f", "Records": True, "Total": ":.2f"},
+        title=f"Highest total predicted waste by {group_col}",
+        labels={"Total": "Total predicted waste"},
         color_discrete_sequence=["#0F766E"],
     )
-    grouped_chart.update_layout(
+    group_chart.update_layout(
         template="plotly_white",
         paper_bgcolor="#FFFFFF",
         plot_bgcolor="#FFFFFF",
-        font_color="#172B4D",
-        title_font_color="#172B4D",
+        font=dict(color="#172B4D", family="Inter"),
+        title_font=dict(color="#172B4D", size=17),
         margin=dict(l=20, r=20, t=60, b=20),
         xaxis_tickangle=-25,
     )
-    st.plotly_chart(grouped_chart, use_container_width=True)
+    group_chart.update_xaxes(gridcolor="#E8EEF4")
+    group_chart.update_yaxes(gridcolor="#E8EEF4")
+    st.plotly_chart(group_chart, use_container_width=True)
 
 # ============================================================
-# High-prediction records
+# RECORDS TO REVIEW
 # ============================================================
-st.markdown("<div class='section-title'>5. Records to review</div>", unsafe_allow_html=True)
 st.markdown(
-    "<div class='section-help'>The following are the top 10% of records by "
-    "predicted waste in this uploaded file. This is a relative review threshold, "
-    "not a food-safety classification.</div>",
+    "<div class='section-title'>05 &nbsp; Records to review</div>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div class='section-help'>This table highlights the top 10% of predictions "
+    "within the uploaded file. It is a relative review threshold, not a validated "
+    "food-safety risk score.</div>",
     unsafe_allow_html=True,
 )
 
-high_records = result[result[waste_col] >= high_threshold].sort_values(waste_col, ascending=False)
-display_cols = []
-for col in ["Store_Name", "Store_ID", "City", "Category", "Inventory_Remaining", "Shelf_Life_Days"]:
-    if col in high_records.columns:
-        display_cols.append(col)
-display_cols.append(waste_col)
-
+st.markdown(
+    f"<span class='pill'>Review threshold: {high_threshold:,.2f}</span>",
+    unsafe_allow_html=True,
+)
 st.caption(
-    f"Review threshold for this upload: {high_threshold:,.2f} predicted units "
-    f"({high_count:,} records meet or exceed it)."
-)
-st.dataframe(
-    high_records[display_cols].head(20),
-    use_container_width=True,
-    hide_index=True,
+    f"{high_count:,} records meet or exceed the 90th-percentile prediction "
+    "threshold for this upload."
 )
 
-# ============================================================
-# Plain-language interpretation and recommendations
-# ============================================================
-st.markdown("<div class='section-title'>6. What does this mean?</div>", unsafe_allow_html=True)
+review_columns = [
+    col for col in [
+        "Store_Name", "Store_ID", "City", "Category",
+        "Inventory_Remaining", "Shelf_Life_Days", "Demand", "Inventory_Sold",
+    ]
+    if col in high_records.columns
+]
+review_columns.append(waste_col)
 
-if average_waste == 0:
-    interpretation = (
-        "The model predicted zero average waste for these records. "
-        "Confirm that the input data and preprocessing are correct before relying on this result."
-    )
-elif high_count > 0:
-    interpretation = (
-        f"The model estimates {total_waste:,.2f} total waste units across "
-        f"{records_count:,} records, with an average of {average_waste:,.2f} units "
-        f"per record. Start by reviewing the {min(10, len(high_records))} highest-prediction "
-        "records shown above."
+if review_columns:
+    st.dataframe(
+        high_records[review_columns].head(20),
+        use_container_width=True,
+        hide_index=True,
     )
 else:
-    interpretation = (
-        f"The model estimates {total_waste:,.2f} total waste units across "
-        f"{records_count:,} records. Review the summary and distribution charts "
-        "to understand the range of estimates."
+    st.dataframe(
+        high_records[[waste_col]].head(20),
+        use_container_width=True,
+        hide_index=True,
     )
+
+# ============================================================
+# PLAIN LANGUAGE INTERPRETATION
+# ============================================================
+st.markdown(
+    "<div class='section-title'>06 &nbsp; Understand the result</div>",
+    unsafe_allow_html=True,
+)
 
 st.markdown(
     f"""
+    <div class="recommendation blue">
+        <h4>What the total means</h4>
+        The model estimates a combined waste quantity of
+        <b>{total_waste:,.2f}</b> across <b>{len(result):,}</b> records.
+        This is the sum of the model's predictions.
+    </div>
     <div class="recommendation">
-        <h4>📌 Plain-language summary</h4>
-        {interpretation}
+        <h4>What the average means</h4>
+        The average estimate is <b>{average_waste:,.2f}</b> per record.
+        Individual records may have higher or lower predictions.
+    </div>
+    <div class="recommendation warning">
+        <h4>Where to start reviewing</h4>
+        The highest prediction is <b>{maximum_waste:,.2f}</b>, in input row
+        <b>{int(result.index.get_loc(highest_index)) + 1}</b>
+        of the displayed result set. Check relevant inventory, sales, demand,
+        and expiry information before deciding on any action.
     </div>
     """,
     unsafe_allow_html=True,
 )
 
-st.markdown("### Suggested next actions")
+st.markdown("#### Suggested next actions")
 st.markdown(
-    "<p class='small-muted'>These are general inventory-management suggestions, "
+    "<p class='muted'>These are general inventory-management suggestions, "
     "not causes identified by the model.</p>",
     unsafe_allow_html=True,
 )
@@ -534,52 +716,89 @@ st.markdown(
     """
     <div class="recommendation warning">
         <h4>1. Review high-prediction records</h4>
-        Check stock levels, sales trends, expiry dates, and recent demand for
-        the records listed above before taking action.
+        Check stock levels, sales trends, demand, and expiry dates for records
+        shown in the review table. Verify the information before acting.
     </div>
     <div class="recommendation">
-        <h4>2. Check upcoming expiry dates</h4>
-        Where expiry information is available, prioritise safe, eligible stock
-        rotation and follow applicable food-safety procedures.
+        <h4>2. Check approaching expiry dates</h4>
+        If expiry information is available, review products approaching expiry
+        and follow applicable food-safety procedures.
     </div>
     <div class="recommendation">
         <h4>3. Compare predictions with actual outcomes</h4>
-        Track observed waste over time and compare it with the model estimates
-        to evaluate whether predictions are useful.
+        Track observed waste and compare it with model estimates over time
+        to evaluate the model on real outcomes.
     </div>
     <div class="recommendation">
-        <h4>4. Adjust inventory carefully</h4>
-        Use verified sales and demand data, operational constraints, and staff
-        judgement before changing order quantities.
+        <h4>4. Plan inventory carefully</h4>
+        Use verified sales and demand information, operational constraints,
+        and staff judgement before changing order quantities.
     </div>
     """,
     unsafe_allow_html=True,
 )
 
 # ============================================================
-# Full results and download
+# FULL RESULTS + FILTER + DOWNLOAD
 # ============================================================
-st.markdown("<div class='section-title'>7. Prediction results</div>", unsafe_allow_html=True)
 st.markdown(
-    "<div class='section-help'>Review the full output table or download a CSV "
-    "containing the uploaded features and the predicted waste quantity.</div>",
+    "<div class='section-title'>07 &nbsp; Detailed prediction results</div>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div class='section-help'>Search the table to inspect particular records. "
+    "The CSV download includes every valid prediction, regardless of the table filter.</div>",
     unsafe_allow_html=True,
 )
 
-st.dataframe(result, use_container_width=True, hide_index=True)
+search_text = st.text_input(
+    "Search results",
+    placeholder="Search any displayed column value...",
+)
+display_result = result.copy()
+if search_text.strip():
+    mask = display_result.astype(str).apply(
+        lambda column: column.str.contains(
+            search_text.strip(), case=False, regex=False, na=False
+        )
+    ).any(axis=1)
+    display_result = display_result.loc[mask]
+
+st.caption(f"Showing {len(display_result):,} of {len(result):,} records.")
+st.dataframe(display_result, use_container_width=True, hide_index=True)
 
 csv_bytes = result.to_csv(index=False).encode("utf-8")
 st.download_button(
-    label="⬇ Download prediction results (CSV)",
+    "Download prediction results (CSV)",
     data=csv_bytes,
     file_name="food_waste_predictions.csv",
     mime="text/csv",
 )
 
-st.markdown("---")
+with st.expander("About this model and its limitations"):
+    st.markdown(
+        """
+        **What the app does:** A trained Random Forest regression model
+        estimates waste quantity from uploaded feature values.
+
+        **How to interpret results:**
+        - A high estimate indicates a record worth reviewing, not a confirmed loss.
+        - Predictions do not independently identify why waste may occur.
+        - Charts summarize estimates and are not evidence of real-world outcomes.
+        - Recommendation cards are general suggestions, not automated decisions.
+
+        **Before operational use:** Validate feature preparation, assess the model
+        on suitable unseen data, compare predictions with observed waste, and
+        check for target leakage in the training pipeline.
+        """
+    )
+
+st.divider()
 st.markdown(
-    "<p class='small-muted'>Important: Predictions are generated by a trained "
-    "machine-learning model and should be treated as estimates. Confirm input "
-    "features and validate predictions against real outcomes before operational use.</p>",
+    "<p class='muted' style='text-align:center;'>"
+    "<b>Food Waste Intelligence</b> · Built with Python, Scikit-learn, "
+    "Pandas, Plotly and Streamlit<br>"
+    "Decision support only — validate estimates against actual outcomes."
+    "</p>",
     unsafe_allow_html=True,
 )
