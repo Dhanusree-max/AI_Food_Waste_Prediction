@@ -17,179 +17,48 @@ st.set_page_config(
 )
 
 # ============================================================
-# ENTERPRISE THEME — WHITE, NAVY, TEAL
+# POWER-BI-INSPIRED DASHBOARD THEME
 # ============================================================
 st.markdown(
     """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-    html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;
-    }
-    .stApp {
-        background: #F4F7FB;
-        color: #172B4D;
-    }
-    [data-testid="stHeader"] {
-        background: rgba(244,247,251,0.96);
-    }
-    [data-testid="stSidebar"] {
-        background: #FFFFFF;
-        border-right: 1px solid #DFE7F0;
-    }
-    [data-testid="stSidebar"] * {
-        color: #24364B;
-    }
-    .block-container {
-        max-width: 1500px;
-        padding-top: 1.7rem;
-        padding-bottom: 3rem;
-    }
-    .hero {
-        background: #FFFFFF;
-        border: 1px solid #DFE7F0;
-        border-top: 5px solid #0F766E;
-        border-radius: 16px;
-        padding: 28px 32px;
-        margin-bottom: 24px;
-        box-shadow: 0 5px 18px rgba(23,43,77,0.045);
-    }
-    .hero-kicker {
-        color: #0F766E !important;
-        font-size: 0.78rem;
-        font-weight: 800;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        margin-bottom: 10px;
-    }
-    .hero h1 {
-        color: #172B4D !important;
-        font-size: clamp(1.7rem, 3vw, 2.35rem);
-        line-height: 1.2;
-        font-weight: 800;
-        margin: 0 0 12px 0;
-    }
-    .hero p {
-        color: #52647A !important;
-        font-size: 1rem;
-        line-height: 1.75;
-        margin: 0;
-        max-width: 950px;
-    }
-    .section-title {
-        color: #172B4D !important;
-        font-size: 1.32rem;
-        font-weight: 800;
-        margin: 20px 0 7px 0;
-    }
-    .section-help {
-        color: #5B6B80 !important;
-        font-size: 0.91rem;
-        line-height: 1.65;
-        margin-bottom: 15px;
-    }
-    .metric-card {
-        background: #FFFFFF;
-        border: 1px solid #DFE7F0;
-        border-radius: 14px;
-        padding: 19px 20px;
-        min-height: 132px;
-        box-shadow: 0 4px 14px rgba(23,43,77,0.035);
-    }
-    .metric-label {
-        color: #64748B !important;
-        font-size: 0.83rem;
-        font-weight: 650;
-        margin-bottom: 10px;
-    }
-    .metric-value {
-        color: #172B4D !important;
-        font-size: clamp(1.45rem, 2.2vw, 1.9rem);
-        font-weight: 800;
-        line-height: 1.2;
-        overflow-wrap: anywhere;
-    }
-    .metric-note {
-        color: #64748B !important;
-        font-size: 0.77rem;
-        margin-top: 8px;
-        line-height: 1.5;
-    }
-    .recommendation {
-        background: #FFFFFF;
-        border: 1px solid #DFE7F0;
-        border-left: 5px solid #0F766E;
-        border-radius: 12px;
-        padding: 16px 19px;
-        margin: 11px 0;
-        color: #334155 !important;
-        line-height: 1.7;
-    }
-    .recommendation * {
-        color: #334155 !important;
-    }
-    .recommendation h4 {
-        color: #172B4D !important;
-        font-size: 0.98rem;
-        font-weight: 750;
-        margin: 0 0 6px 0;
-    }
-    .recommendation.warning {
-        border-left-color: #D97706;
-        background: #FFFCF5;
-    }
-    .recommendation.blue {
-        border-left-color: #2563EB;
-    }
-    .pill {
-        display: inline-block;
-        padding: 4px 9px;
-        border-radius: 20px;
-        background: #E6F5F2;
-        color: #0F766E !important;
-        font-size: 0.75rem;
-        font-weight: 750;
-        margin-bottom: 10px;
-    }
-    .muted {
-        color: #64748B !important;
-        font-size: 0.83rem;
-        line-height: 1.65;
-    }
-    div.stButton > button, div.stDownloadButton > button {
-        background: #0F766E;
-        color: #FFFFFF;
-        border: 1px solid #0F766E;
-        border-radius: 9px;
-        font-weight: 700;
-        min-height: 42px;
-    }
-    div.stButton > button:hover, div.stDownloadButton > button:hover {
-        background: #115E59;
-        color: #FFFFFF;
-        border-color: #115E59;
-    }
-    [data-testid="stFileUploader"] {
-        background: #FFFFFF;
-        border: 1px dashed #9AAABD;
-        border-radius: 12px;
-        padding: 12px;
-    }
-    [data-testid="stDataFrame"] {
-        border: 1px solid #DFE7F0;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-    div[data-testid="stAlert"] {
-        border-radius: 10px;
-    }
-    h1, h2, h3, h4, p, label {
-        color: #172B4D;
-    }
-    hr {
-        border-color: #DFE7F0;
-    }
+    html, body, [class*="css"] { font-family: 'Inter', sans-serif; }
+    .stApp { background: #F4F6F9; color: #172B4D; }
+    [data-testid="stHeader"] { background: #102A4C; }
+    [data-testid="stToolbar"] { right: 1rem; }
+    [data-testid="stSidebar"] { background: #102A4C; border-right: 3px solid #1B456D; }
+    [data-testid="stSidebar"] * { color: #F4F7FB !important; }
+    [data-testid="stSidebar"] [data-testid="stFileUploader"] { background: #FFFFFF; }
+    [data-testid="stSidebar"] [data-testid="stFileUploader"] * { color: #172B4D !important; }
+    .block-container { max-width: 1600px; padding-top: 1.2rem; padding-bottom: 2.5rem; }
+    .hero { background: #102A4C; border: 1px solid #183C63; border-radius: 4px; padding: 21px 26px; margin-bottom: 18px; box-shadow: 0 4px 12px rgba(16,42,76,.12); }
+    .hero-kicker { color: #BFD9F2 !important; font-size: .72rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 7px; }
+    .hero h1 { color: #FFFFFF !important; font-size: clamp(1.55rem, 2.6vw, 2.15rem); line-height: 1.2; font-weight: 800; margin: 0 0 8px 0; }
+    .hero p { color: #E0EAF5 !important; font-size: .92rem; line-height: 1.55; margin: 0; max-width: 1100px; }
+    .section-title { color: #173A60 !important; font-size: 1.12rem; font-weight: 800; margin: 17px 0 5px 0; border-left: 4px solid #1E9B8A; padding-left: 10px; }
+    .section-help { color: #5A6A7E !important; font-size: .84rem; line-height: 1.55; margin-bottom: 12px; }
+    .metric-card { background: #FFFFFF; border: 1px solid #D8E0E9; border-top: 4px solid #1E9B8A; border-radius: 3px; padding: 14px 16px; min-height: 112px; box-shadow: 0 2px 7px rgba(16,42,76,.05); }
+    .metric-label { color: #52647A !important; font-size: .76rem; font-weight: 700; margin-bottom: 8px; }
+    .metric-value { color: #173A60 !important; font-size: clamp(1.3rem, 2vw, 1.75rem); font-weight: 800; line-height: 1.15; overflow-wrap: anywhere; }
+    .metric-note { color: #64748B !important; font-size: .72rem; margin-top: 7px; line-height: 1.4; }
+    .recommendation { background: #FFFFFF; border: 1px solid #D8E0E9; border-left: 4px solid #1E9B8A; border-radius: 3px; padding: 13px 16px; margin: 9px 0; color: #334155 !important; line-height: 1.6; }
+    .recommendation * { color: #334155 !important; }
+    .recommendation h4 { color: #173A60 !important; font-size: .94rem; font-weight: 750; margin: 0 0 5px 0; }
+    .recommendation.warning { border-left-color: #E0A12B; background: #FFFCF5; }
+    .recommendation.blue { border-left-color: #3C78B5; }
+    .pill { display: inline-block; padding: 4px 9px; border-radius: 3px; background: #E1F3EF; color: #126D63 !important; font-size: .73rem; font-weight: 750; margin-bottom: 8px; }
+    .muted { color: #64748B !important; font-size: .79rem; line-height: 1.55; }
+    div.stButton > button, div.stDownloadButton > button { background: #167F78; color: #FFFFFF; border: 1px solid #167F78; border-radius: 4px; font-weight: 700; min-height: 40px; }
+    div.stButton > button:hover, div.stDownloadButton > button:hover { background: #12665F; color: #FFFFFF; border-color: #12665F; }
+    [data-testid="stFileUploader"] { background: #FFFFFF; border: 1px dashed #9AAABD; border-radius: 4px; padding: 10px; }
+    [data-testid="stDataFrame"] { border: 1px solid #D8E0E9; border-radius: 3px; overflow: hidden; }
+    div[data-testid="stAlert"] { border-radius: 4px; }
+    h1, h2, h3, h4, p, label { color: #172B4D; }
+    hr { border-color: #D8E0E9; }
+    .stTabs [data-baseweb="tab-list"] { gap: 3px; background: #E8EDF3; padding: 4px; border-radius: 3px; }
+    .stTabs [data-baseweb="tab"] { background: #F8FAFC; border-radius: 2px; color: #173A60; font-weight: 700; padding: 8px 14px; }
+    .stTabs [aria-selected="true"] { background: #167F78 !important; color: #FFFFFF !important; }
     </style>
     """,
     unsafe_allow_html=True,
@@ -212,43 +81,39 @@ def load_model(model_path: str):
 
 
 # ============================================================
-# SIDEBAR
+# SIDEBAR — navigation and dataset upload
 # ============================================================
 with st.sidebar:
     st.markdown("## 🍎 Food Waste AI")
     st.markdown(
-        "<span style='color:#0F766E;font-weight:800;font-size:0.75rem;"
-        "letter-spacing:.1em;'>INVENTORY INTELLIGENCE</span>",
+        "<span style='color:#7FE0D0;font-weight:800;font-size:.70rem;letter-spacing:.12em;'>INVENTORY INTELLIGENCE</span>",
         unsafe_allow_html=True,
     )
     st.divider()
-    st.markdown("### Workflow")
-    st.markdown(
-        """
-        **01** · Upload features  
+    st.markdown("### Dashboard navigation")
+    st.markdown("""
+    **01**  Overview  
 
-        **02** · Generate predictions  
+    **02**  Waste analytics  
 
-        **03** · Explore analytics  
+    **03**  Store / product comparison  
 
-        **04** · Review records  
+    **04**  Records to review  
 
-        **05** · Export results
-        """
+    **05**  Export results
+    """)
+    st.divider()
+    st.markdown("### Upload model-ready data")
+    uploaded_file = st.file_uploader(
+        "Choose X_preprocessed.csv",
+        type=["csv"],
+        help="Upload numeric, preprocessed features matching the model's training inputs.",
+        key="food_waste_csv_upload",
     )
     st.divider()
-    st.markdown("### Technology")
-    st.markdown(
-        "<p class='muted'>Python · Pandas · Scikit-learn · "
-        "Plotly · Streamlit</p>",
-        unsafe_allow_html=True,
-    )
-    st.divider()
-    st.markdown(
-        "<p class='muted'>Predictions are estimates. Validate results "
-        "against observed waste before operational decisions.</p>",
-        unsafe_allow_html=True,
-    )
+    st.markdown("### Project stack")
+    st.markdown("<p class='muted'>Python · Pandas · Scikit-learn · Plotly · Streamlit</p>", unsafe_allow_html=True)
+    st.markdown("<p class='muted'>Estimates are decision-support outputs, not verified measurements of actual waste.</p>", unsafe_allow_html=True)
 
 # ============================================================
 # HERO
@@ -256,17 +121,17 @@ with st.sidebar:
 st.markdown(
     """
     <div class="hero">
-        <div class="hero-kicker">Inventory analytics platform</div>
-        <h1>🍎 Food Waste Prediction &amp; Intelligence</h1>
+        <div class="hero-kicker">FOOD WASTE • INVENTORY ANALYTICS</div>
+        <h1>🍎 Food Waste Prediction &amp; Smart Inventory</h1>
         <p>
-            Understand predicted food waste with clear metrics, visual analytics,
-            and practical review suggestions. Upload your model-ready inventory
-            features to explore record-level estimates.
+            Explore model-based waste estimates, compare records, and identify inventory entries for review.
+            Upload the same preprocessed feature columns used to train the model.
         </p>
     </div>
     """,
     unsafe_allow_html=True,
 )
+st.markdown("<div style='background:#FFFFFF;border:1px solid #D8E0E9;border-left:5px solid #167F78;padding:9px 14px;margin:0 0 15px 0;color:#52647A;font-size:.82rem;'>DASHBOARD VIEW &nbsp; | &nbsp; Prediction summary &nbsp; • &nbsp; Analytics &nbsp; • &nbsp; Priority review &nbsp; • &nbsp; Export</div>", unsafe_allow_html=True)
 
 # ============================================================
 # LOAD MODEL
@@ -289,36 +154,17 @@ except Exception as exc:
     st.stop()
 
 # ============================================================
-# UPLOAD
+# UPLOAD STATUS
 # ============================================================
-st.markdown(
-    "<div class='section-title'>01 &nbsp; Upload your dataset</div>",
-    unsafe_allow_html=True,
-)
-st.markdown(
-    "<div class='section-help'>Upload the numeric, preprocessed feature CSV "
-    "that matches the model's training inputs. The application cannot "
-    "re-create training-time encoding or feature engineering from a raw file.</div>",
-    unsafe_allow_html=True,
-)
-
-uploaded_file = st.file_uploader(
-    "Choose X_preprocessed.csv",
-    type=["csv"],
-    help="Use the same feature columns and preprocessing as model training.",
-)
-
 if uploaded_file is None:
-    st.markdown(
-        """
-        <div class="recommendation blue">
-            <h4>Ready when you are</h4>
-            Upload your preprocessed feature file to see the prediction summary,
-            charts, records to review, recommendations, and export options.
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+    st.markdown("<div class='section-title'>Dashboard overview</div>", unsafe_allow_html=True)
+    st.info("Upload your model-ready CSV from the left sidebar to populate the dashboard.")
+    st.markdown("""
+    <div class="recommendation blue"><h4>How to use this dashboard</h4>
+    1. Upload a numeric, preprocessed CSV in the sidebar. <br>
+    2. Generate predictions when the file is ready. <br>
+    3. Explore KPIs, charts, high-prediction records, and downloadable results.</div>
+    """, unsafe_allow_html=True)
     st.stop()
 
 try:
@@ -366,39 +212,10 @@ if not np.isfinite(numeric_values).all():
     st.stop()
 
 # ============================================================
-# INPUT OVERVIEW
-# ============================================================
-st.markdown(
-    "<div class='section-title'>Dataset overview</div>",
-    unsafe_allow_html=True,
-)
-overview_cols = st.columns(3)
-overview = [
-    ("Input records", f"{len(data):,}", "Rows submitted for prediction"),
-    ("Input features", f"{data.shape[1]:,}", "Columns supplied to the model"),
-    ("Missing values", f"{int(data.isna().sum().sum()):,}", "Missing cells detected"),
-]
-for col, (label, value, note) in zip(overview_cols, overview):
-    with col:
-        st.markdown(
-            f"""
-            <div class="metric-card">
-                <div class="metric-label">{label}</div>
-                <div class="metric-value">{value}</div>
-                <div class="metric-note">{note}</div>
-            </div>
-            """,
-            unsafe_allow_html=True,
-        )
-
-with st.expander("Preview input features"):
-    st.dataframe(data.head(10), use_container_width=True, hide_index=True)
-
-# ============================================================
 # PREDICT — preserve results across Streamlit reruns
 # ============================================================
 st.markdown(
-    "<div class='section-title'>02 &nbsp; Generate predictions</div>",
+    "<div class='section-title'>Generate predictions</div>",
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -499,7 +316,7 @@ high_count = len(high_records)
 
 st.divider()
 st.markdown(
-    "<div class='section-title'>03 &nbsp; Prediction overview</div>",
+    "<div class='section-title'>Key performance indicators</div>",
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -539,7 +356,7 @@ st.markdown(
 # CHARTS
 # ============================================================
 st.markdown(
-    "<div class='section-title'>04 &nbsp; Explore the analytics</div>",
+    "<div class='section-title'>Food waste analytics</div>",
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -558,7 +375,7 @@ with chart_left:
         nbins=25,
         title="Predicted waste distribution",
         labels={waste_col: "Predicted waste quantity", "count": "Number of records"},
-        color_discrete_sequence=["#0F766E"],
+        color_discrete_sequence=["#168F83"],
     )
     hist.update_layout(
         template="plotly_white",
@@ -573,17 +390,20 @@ with chart_left:
     st.plotly_chart(hist, use_container_width=True)
 
 with chart_right:
-    bins = pd.cut(pred, bins=5, duplicates="drop")
-    band_counts = bins.value_counts(sort=False).reset_index()
-    band_counts.columns = ["Prediction range", "Number of records"]
-    band_counts["Prediction range"] = band_counts["Prediction range"].astype(str)
+    if pred.nunique() < 2:
+        band_counts = pd.DataFrame({"Prediction range": [f"{pred.iloc[0]:,.2f}"], "Number of records": [len(pred)]})
+    else:
+        bins = pd.cut(pred, bins=min(5, pred.nunique()), duplicates="drop")
+        band_counts = bins.value_counts(sort=False).reset_index()
+        band_counts.columns = ["Prediction range", "Number of records"]
+        band_counts["Prediction range"] = band_counts["Prediction range"].astype(str)
     band_chart = px.bar(
         band_counts,
         x="Prediction range",
         y="Number of records",
         title="Records by prediction range",
         labels={"Prediction range": "Predicted waste range"},
-        color_discrete_sequence=["#3B82A0"],
+        color_discrete_sequence=["#3D79B5"],
     )
     band_chart.update_layout(
         template="plotly_white",
@@ -625,7 +445,7 @@ if group_candidates:
         hover_data={"Average": ":.2f", "Records": True, "Total": ":.2f"},
         title=f"Highest total predicted waste by {group_col}",
         labels={"Total": "Total predicted waste"},
-        color_discrete_sequence=["#0F766E"],
+        color_discrete_sequence=["#168F83"],
     )
     group_chart.update_layout(
         template="plotly_white",
@@ -644,7 +464,7 @@ if group_candidates:
 # RECORDS TO REVIEW
 # ============================================================
 st.markdown(
-    "<div class='section-title'>05 &nbsp; Records to review</div>",
+    "<div class='section-title'>Priority records to review</div>",
     unsafe_allow_html=True,
 )
 st.markdown(
@@ -689,7 +509,7 @@ else:
 # PLAIN LANGUAGE INTERPRETATION
 # ============================================================
 st.markdown(
-    "<div class='section-title'>06 &nbsp; Understand the result</div>",
+    "<div class='section-title'>Interpretation and next steps</div>",
     unsafe_allow_html=True,
 )
 
@@ -754,7 +574,7 @@ st.markdown(
 # FULL RESULTS + FILTER + DOWNLOAD
 # ============================================================
 st.markdown(
-    "<div class='section-title'>07 &nbsp; Detailed prediction results</div>",
+    "<div class='section-title'>Detailed records and export</div>",
     unsafe_allow_html=True,
 )
 st.markdown(
