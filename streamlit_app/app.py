@@ -461,6 +461,107 @@ if group_candidates:
     st.plotly_chart(group_chart, use_container_width=True)
 
 # ============================================================
+# PIE CHARTS — prediction mix and review priority
+# ============================================================
+st.markdown(
+    "<div class='section-title'>Prediction mix at a glance</div>",
+    unsafe_allow_html=True,
+)
+st.markdown(
+    "<div class='section-help'>Donut charts summarize how predictions are distributed "
+    "within this upload. Priority tiers are relative to this dataset, not absolute "
+    "food-safety or business-risk classifications.</div>",
+    unsafe_allow_html=True,
+)
+
+pie_left, pie_right = st.columns(2)
+
+# Relative priority tiers based on percentile rank, robust even when many predictions tie.
+percentile_rank = pred.rank(method="average", pct=True)
+priority_labels = pd.cut(
+    percentile_rank,
+    bins=[0, 0.50, 0.75, 0.90, 1.000001],
+    labels=["Lower half", "50th–75th percentile", "75th–90th percentile", "Top 10% range"],
+    include_lowest=True,
+    right=True,
+)
+priority_counts = (
+    priority_labels.astype("object")
+    .fillna("Unclassified")
+    .value_counts()
+    .reindex(["Lower half", "50th–75th percentile", "75th–90th percentile", "Top 10% range", "Unclassified"], fill_value=0)
+    .reset_index()
+)
+priority_counts.columns = ["Priority tier", "Records"]
+priority_counts = priority_counts[priority_counts["Records"] > 0]
+
+with pie_left:
+    priority_pie = px.pie(
+        priority_counts,
+        names="Priority tier",
+        values="Records",
+        hole=0.58,
+        title="Share of records by prediction tier",
+        color_discrete_sequence=["#168F83", "#3D79B5", "#E4B04A", "#D66A5E", "#8B9AAF"],
+    )
+    priority_pie.update_traces(
+        textposition="inside",
+        textinfo="percent+label",
+        insidetextorientation="radial",
+        hovertemplate="%{label}<br>Records: %{value:,}<br>Share: %{percent}<extra></extra>",
+        marker=dict(line=dict(color="#FFFFFF", width=3)),
+    )
+    priority_pie.update_layout(
+        template="plotly_white",
+        paper_bgcolor="#FFFFFF",
+        plot_bgcolor="#FFFFFF",
+        font=dict(color="#172B4D", family="Inter"),
+        title_font=dict(color="#172B4D", size=17),
+        margin=dict(l=20, r=20, t=60, b=20),
+        legend=dict(orientation="h", yanchor="top", y=-0.08, xanchor="center", x=0.5),
+        showlegend=True,
+    )
+    st.plotly_chart(priority_pie, use_container_width=True)
+
+with pie_right:
+    review_mix = pd.DataFrame({
+        "Review group": ["Top 10% range for review", "Remaining records"],
+        "Records": [int((percentile_rank > 0.90).sum()), int((percentile_rank <= 0.90).sum())],
+    })
+    # Ensure small datasets still produce valid pie data.
+    review_mix = review_mix[review_mix["Records"] > 0]
+    review_pie = px.pie(
+        review_mix,
+        names="Review group",
+        values="Records",
+        hole=0.58,
+        title="Records to review vs. remaining",
+        color="Review group",
+        color_discrete_map={
+            "Top 10% range for review": "#D66A5E",
+            "Remaining records": "#1B456D",
+        },
+    )
+    review_pie.update_traces(
+        textposition="inside",
+        textinfo="percent+label",
+        insidetextorientation="radial",
+        hovertemplate="%{label}<br>Records: %{value:,}<br>Share: %{percent}<extra></extra>",
+        marker=dict(line=dict(color="#FFFFFF", width=3)),
+    )
+    review_pie.update_layout(
+        template="plotly_white",
+        paper_bgcolor="#FFFFFF",
+        plot_bgcolor="#FFFFFF",
+        font=dict(color="#172B4D", family="Inter"),
+        title_font=dict(color="#172B4D", size=17),
+        margin=dict(l=20, r=20, t=60, b=20),
+        legend=dict(orientation="h", yanchor="top", y=-0.08, xanchor="center", x=0.5),
+        showlegend=True,
+    )
+    st.plotly_chart(review_pie, use_container_width=True)
+
+# ============================================================
 # RECORDS TO REVIEW
 # ============================================================
 st.markdown(
