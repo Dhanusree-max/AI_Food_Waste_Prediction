@@ -4,6 +4,7 @@ import joblib
 import plotly.express as px
 from pathlib import Path
 import numpy as np
+import hashlib
 
 # ============================================================
 # PAGE CONFIGURATION
@@ -394,7 +395,7 @@ with st.expander("Preview input features"):
     st.dataframe(data.head(10), use_container_width=True, hide_index=True)
 
 # ============================================================
-# PREDICT — preserve working model.predict(data) workflow
+# PREDICT — preserve results across Streamlit reruns
 # ============================================================
 st.markdown(
     "<div class='section-title'>02 &nbsp; Generate predictions</div>",
@@ -402,61 +403,72 @@ st.markdown(
 )
 st.markdown(
     "<div class='section-help'>Generate an estimate for every uploaded record. "
-    "The app checks feature count where the model exposes it, and reports "
-    "prediction errors clearly.</div>",
+    "After predictions are generated, searching and interacting with the dashboard "
+    "will not require you to generate them again.</div>",
     unsafe_allow_html=True,
 )
 
-if not st.button("Generate food waste predictions", type="primary"):
-    st.stop()
+# Identify the current upload so old predictions are never shown for a new file.
+upload_signature = hashlib.sha256(uploaded_file.getvalue()).hexdigest()
+if st.session_state.get("food_waste_upload_signature") != upload_signature:
+    st.session_state.pop("food_waste_result", None)
+    st.session_state["food_waste_upload_signature"] = upload_signature
 
-try:
-    expected_count = getattr(model, "n_features_in_", None)
-    if expected_count is not None and len(data.columns) != int(expected_count):
-        st.error(
-            f"Feature-count mismatch: the uploaded file has {len(data.columns)} "
-            f"columns, but the model expects {expected_count}. Upload the exact "
-            "preprocessed feature set used during training."
-        )
-        st.stop()
-
-    expected_names = getattr(model, "feature_names_in_", None)
-    if expected_names is not None:
-        expected_names = list(expected_names)
-        missing_features = [name for name in expected_names if name not in data.columns]
-        unexpected_features = [name for name in data.columns if name not in expected_names]
-        if missing_features or unexpected_features:
-            if missing_features:
-                st.error("Missing model features: " + ", ".join(map(str, missing_features)))
-            if unexpected_features:
-                st.error("Unexpected input features: " + ", ".join(map(str, unexpected_features)))
+if st.button("Generate food waste predictions", type="primary", key="generate_predictions"):
+    try:
+        expected_count = getattr(model, "n_features_in_", None)
+        if expected_count is not None and len(data.columns) != int(expected_count):
+            st.error(
+                f"Feature-count mismatch: the uploaded file has {len(data.columns)} "
+                f"columns, but the model expects {expected_count}. Upload the exact "
+                "preprocessed feature set used during training."
+            )
             st.stop()
-        prediction_input = data[expected_names]
-    else:
-        prediction_input = data
 
-    with st.spinner("Generating predictions..."):
-        predictions = model.predict(prediction_input)
+        expected_names = getattr(model, "feature_names_in_", None)
+        if expected_names is not None:
+            expected_names = list(expected_names)
+            missing_features = [name for name in expected_names if name not in data.columns]
+            unexpected_features = [name for name in data.columns if name not in expected_names]
+            if missing_features or unexpected_features:
+                if missing_features:
+                    st.error("Missing model features: " + ", ".join(map(str, missing_features)))
+                if unexpected_features:
+                    st.error("Unexpected input features: " + ", ".join(map(str, unexpected_features)))
+                st.stop()
+            prediction_input = data[expected_names]
+        else:
+            prediction_input = data
 
-    predictions = np.asarray(predictions).reshape(-1)
-    if len(predictions) != len(data):
-        st.error("The number of predictions did not match the number of uploaded records.")
-        st.stop()
-    if not np.isfinite(predictions.astype(float)).all():
-        st.error("The model returned invalid prediction values.")
-        st.stop()
+        with st.spinner("Generating predictions..."):
+            predictions = model.predict(prediction_input)
 
-    result = data.copy()
-    result["Predicted_Waste_Quantity"] = predictions
-    st.session_state["food_waste_result"] = result
-    st.success(f"Predictions generated for {len(result):,} records.")
+        predictions = np.asarray(predictions).reshape(-1)
+        if len(predictions) != len(data):
+            st.error("The number of predictions did not match the number of uploaded records.")
+            st.stop()
+        if not np.isfinite(predictions.astype(float)).all():
+            st.error("The model returned invalid prediction values.")
+            st.stop()
 
-except Exception as exc:
-    st.error(
-        "Prediction failed. Confirm that the uploaded columns, feature order, "
-        "and preprocessing match the model's training data."
-    )
-    st.exception(exc)
+        result = data.copy()
+        result["Predicted_Waste_Quantity"] = predictions
+        st.session_state["food_waste_result"] = result
+        st.session_state["food_waste_result_signature"] = upload_signature
+        st.success(f"Predictions generated for {len(result):,} records.")
+
+    except Exception as exc:
+        st.error(
+            "Prediction failed. Confirm that the uploaded columns, feature order, "
+            "and preprocessing match the model's training data."
+        )
+        st.exception(exc)
+
+# Restore the result on every rerun, including when the user types in search.
+result = st.session_state.get("food_waste_result")
+result_signature = st.session_state.get("food_waste_result_signature")
+if result is None or result.empty or result_signature != upload_signature:
+    st.info("Your file is ready. Click **Generate food waste predictions** once to view the dashboard.")
     st.stop()
 
 # ============================================================
